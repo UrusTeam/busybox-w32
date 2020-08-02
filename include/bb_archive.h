@@ -217,7 +217,7 @@ void create_or_remember_link(llist_t **link_placeholders,
 		const char *target,
 		const char *linkname,
 		int hard_link) FAST_FUNC;
-#if !ENABLE_PLATFORM_MINGW32
+#if !ENABLE_PLATFORM_MINGW32 || defined(FORCE_SYMLINK)
 void create_links_from_list(llist_t *list) FAST_FUNC;
 #else
 #define create_links_from_list(l) (void)0
