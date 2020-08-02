@@ -11,7 +11,7 @@ void FAST_FUNC create_or_remember_link(llist_t **link_placeholders
 		const char *linkname,
 		int hard_link IF_PLATFORM_MINGW32(UNUSED_PARAM))
 {
-#if !ENABLE_PLATFORM_MINGW32
+#if !ENABLE_PLATFORM_MINGW32 || defined(FORCE_SYMLINK)
 	if (hard_link || target[0] == '/' || strstr(target, "..")) {
 		llist_add_to_end(link_placeholders,
 			xasprintf("%c%s%c%s", hard_link, linkname, '\0', target)
@@ -30,7 +30,7 @@ void FAST_FUNC create_or_remember_link(llist_t **link_placeholders
 #endif
 }
 
-#if !ENABLE_PLATFORM_MINGW32
+#if !ENABLE_PLATFORM_MINGW32 || defined(FORCE_SYMLINK)
 void FAST_FUNC create_links_from_list(llist_t *list)
 {
 	while (list) {
